@@ -1,0 +1,28 @@
+name: tests
+on: 
+  workflow_dispatch:
+  push:
+
+jobs:
+  tests:
+    runs-on: "macos-latest"
+    # runs-on: self-hosted
+
+    steps:
+      # Always include the checkout step so that
+      # a project is available for Godot to export
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.ACCESS_TOKEN }}
+          
+      - name: install the engine
+        run: |
+          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_macos.universal.zip
+          unzip godot.zip
+
+      - name: run tests
+        run: |
+          Godot.app/Contents/MacOS/Godot --path "$PWD" --headless --import --quit
+          Godot.app/Contents/MacOS/Godot -d -s --path "$PWD" addons/gut/gut_cmdln.gd -gdir ./scripts/test/integration -gexit --headless --verbose

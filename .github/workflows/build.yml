@@ -1,0 +1,77 @@
+name: builds
+on: 
+  workflow_dispatch:
+  push:
+    tags:
+      - "build*"
+
+jobs:
+  export_game:
+    runs-on: "macos-latest"
+    # runs-on: self-hosted
+
+    # Add permission for release creation. Can be made narrower according to your needs
+    permissions: write-all
+    # Job name, can be anything
+    name: export game for platforms
+    strategy:
+      fail-fast: false
+
+    steps:
+      # Always include the checkout step so that
+      # a project is available for Godot to export
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: install the engine
+        run: |
+          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_macos.universal.zip
+          unzip godot.zip
+
+      - name: (mac) export game
+        id: export
+        run: |
+          mkdir bin && echo "created bin directory"
+          Godot.app/Contents/MacOS/Godot --path "$PWD" --headless --import --versbose --quit
+          Godot.app/Contents/MacOS/Godot project.godot --headless --export-release "mac" --quit
+          mkdir bin/releases && echo "created bin/releases directory"
+          zip -r bin/releases/macos.zip bin/lostechoes.app && echo "arhived mac release"
+
+      - name: (mac) upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "macos"
+          path: "bin/releases/macos.zip"
+
+      - name: (windows) export game
+        id: export_windows
+        run: |
+          mkdir bin/windows
+          echo "created bin/windows directory"
+          Godot.app/Contents/MacOS/Godot project.godot --headless --export-release "windows" --quit
+          zip -r bin/releases/windows.zip bin/windows
+          echo "arhived windows release"
+
+      - name: (windows) upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "windows"
+          path: "bin/releases/windows.zip"
+
+      - name: (linux) export game
+        id: linux_windows
+        run: |
+          mkdir bin/linux
+          echo "created bin/linux directory"
+          Godot.app/Contents/MacOS/Godot project.godot --headless --export-release "linux" --quit
+          zip -r bin/releases/linux.zip bin/linux
+          echo "arhived linux release"
+          
+      - name: (linux) upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "linux"
+          path: "bin/releases/linux.zip"
