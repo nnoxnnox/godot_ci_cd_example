@@ -25,4 +25,4 @@ jobs:
       - name: run tests
         run: |
           Godot.app/Contents/MacOS/Godot --path "$PWD" --headless --import --quit
-          Godot.app/Contents/MacOS/Godot -d -s --path "$PWD" addons/gut/gut_cmdln.gd -gdir ./scripts/test/integration -gexit --headless --verbose
+          Godot.app/Contents/MacOS/Godot -d -s --path "$PWD" addons/gut/gut_cmdln.gd -gdir ./tests -gexit --headless --verbose
