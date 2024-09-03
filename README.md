@@ -1,11 +1,11 @@
 # godot_ci_cd_example
-A repository with Godot ci&amp;cd example to make it easier to set up your own using the example
+A repository with Godot ci&amp;cd example to make it easier to set up your own
 
 The actions themselves are located in the <code>.github/workflows</code> folder
 <br/>
 **gut_tests.yml** - responsible for testing
 <br/>
-**build.yml** - for builds respectively
+**build.yml** - for builds
 
 In order to set up tests and builds for your game, you need to:
 1. Create 3 profiles for export, name them <code>mac/windows/linux</code> respectively, fill them with files for export and name them <code>macos.app/windows.exe/linux.x86_64</code>. (or copy the export_presets.cfg)
