@@ -12,3 +12,8 @@ In order to set up tests and builds for your game, you need to:
 2. Copy the <code>.github/workflow</code> folder to you github repository
 3. Copy the export templates, or download them from the [official website](https://godotengine.org/download/) and add them to <code>export/templates</code> folder
 4. ✅ Done!
+
+<hr/>
+
+This instruction is written for those who do not want to dive deeply into the topic.
+If you want to learn more, you can study the code of action files and study the official documentation on GitHub actions
