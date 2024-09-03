@@ -34,44 +34,44 @@ jobs:
       - name: (mac) export game
         id: export
         run: |
-          mkdir bin && echo "created bin directory"
           Godot.app/Contents/MacOS/Godot --path "$PWD" --headless --import --versbose --quit
           Godot.app/Contents/MacOS/Godot project.godot --headless --export-release "mac" --quit
-          mkdir bin/releases && echo "created bin/releases directory"
-          zip -r bin/releases/macos.zip bin/lostechoes.app && echo "arhived mac release"
+          mkdir export/releases
+          echo "created export/releases directory"
+          zip -r export/releases/macos.zip export/macos.app && echo "arhived mac release"
 
       - name: (mac) upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: "macos"
-          path: "bin/releases/macos.zip"
+          path: "export/releases/macos.zip"
 
       - name: (windows) export game
         id: export_windows
         run: |
-          mkdir bin/windows
-          echo "created bin/windows directory"
+          mkdir export/windows
+          echo "created export/windows directory"
           Godot.app/Contents/MacOS/Godot project.godot --headless --export-release "windows" --quit
-          zip -r bin/releases/windows.zip bin/windows
+          zip -r export/releases/windows.zip export/windows
           echo "arhived windows release"
 
       - name: (windows) upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: "windows"
-          path: "bin/releases/windows.zip"
+          path: "export/releases/windows.zip"
 
       - name: (linux) export game
         id: linux_windows
         run: |
-          mkdir bin/linux
-          echo "created bin/linux directory"
+          mkdir export/linux
+          echo "created export/linux directory"
           Godot.app/Contents/MacOS/Godot project.godot --headless --export-release "linux" --quit
-          zip -r bin/releases/linux.zip bin/linux
+          zip -r export/releases/linux.zip export/linux
           echo "arhived linux release"
           
       - name: (linux) upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: "linux"
-          path: "bin/releases/linux.zip"
+          path: "export/releases/linux.zip"
