@@ -13,3 +13,11 @@ config_version=5
 config/name="godot_ci_cd_example"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
