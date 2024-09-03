@@ -1,6 +1,9 @@
 # godot_ci_cd_example
 A repository with Godot ci&amp;cd example to make it easier to set up your own
 
+Automated testing and build achieved using *github actions*. You can read more about them [here](https://docs.github.com/en/actions).
+These are files recognized by github to perform special actions related to the repository.
+
 The actions themselves are located in the <code>.github/workflows</code> folder
 <br/>
 **gut_tests.yml** - responsible for testing
